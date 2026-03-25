@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-itunes-app" content="app-id=6759988874">
     <title>Get It Done — Shared Task</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,6 +16,7 @@
             align-items: center;
             min-height: 100vh;
             padding: 24px;
+            visibility: hidden;
         }
         .card {
             background: #2a2a2a;
@@ -72,13 +74,13 @@
             <div class="task-detail" id="taskDetail"></div>
         </div>
 
-        <a href="https://apps.apple.com/app/get-it-done-priorities/id6759988874"
-           class="app-store-btn">
-            Get the App
+        <a href="#" id="openAppBtn" class="app-store-btn">
+            Open in Get It Done
         </a>
     </div>
 
     <script>
+        // Parse URL parameters and display task info
         var params = new URLSearchParams(window.location.search);
         var title = params.get('title');
         var quadrant = params.get('q');
@@ -96,6 +98,28 @@
                 document.getElementById('taskDetail').textContent = details.join(' · ');
             }
         }
+
+        // Try to open the app immediately when page loads
+        var customSchemeURL = "getitdone://task" + window.location.search;
+        window.location = customSchemeURL;
+
+        // If still here after 1.5 seconds, app isn't installed — show the page
+        setTimeout(function() {
+            document.body.style.visibility = 'visible';
+        }, 1500);
+
+        // Handle button click
+        document.getElementById('openAppBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Try custom scheme first
+            window.location = customSchemeURL;
+            
+            // If app doesn't open in 1.5 seconds, go to App Store
+            setTimeout(function() {
+                window.location = "https://apps.apple.com/app/get-it-done-priorities/id6759988874";
+            }, 1500);
+        });
     </script>
 </body>
 </html>
