@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get It Done — Shared Task</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+        .card {
+            background: #2a2a2a;
+            border-radius: 20px;
+            padding: 40px 32px;
+            max-width: 380px;
+            width: 100%;
+            text-align: center;
+        }
+        .icon { font-size: 48px; margin-bottom: 16px; }
+        h1 { font-size: 22px; margin-bottom: 8px; }
+        .subtitle {
+            color: #999;
+            font-size: 15px;
+            margin-bottom: 32px;
+        }
+        .task-card {
+            background: #333;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+        .task-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .task-detail {
+            color: #999;
+            font-size: 14px;
+        }
+        .app-store-btn {
+            display: inline-block;
+            background: #007AFF;
+            color: white;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 12px;
+            width: 100%;
+        }
+        .app-store-btn:hover { background: #0066DD; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">📋</div>
+        <h1>Someone shared a task</h1>
+        <p class="subtitle">Open in Get It Done to add it to your list</p>
+
+        <div class="task-card" id="taskCard">
+            <div class="task-title" id="taskTitle">Loading...</div>
+            <div class="task-detail" id="taskDetail"></div>
+        </div>
+
+        <a href="https://apps.apple.com/app/get-it-done-priorities/id6759988874"
+           class="app-store-btn">
+            Get the App
+        </a>
+    </div>
+
+    <script>
+        var params = new URLSearchParams(window.location.search);
+        var title = params.get('title');
+        var quadrant = params.get('q');
+        var due = params.get('due');
+
+        if (title) {
+            document.getElementById('taskTitle').textContent = title;
+            var details = [];
+            if (quadrant) details.push(quadrant);
+            if (due) {
+                var date = new Date(parseInt(due) * 1000);
+                details.push('Due: ' + date.toLocaleDateString());
+            }
+            if (details.length > 0) {
+                document.getElementById('taskDetail').textContent = details.join(' · ');
+            }
+        }
+    </script>
+</body>
+</html>
