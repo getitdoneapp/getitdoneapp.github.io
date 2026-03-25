@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "F7K89V25K9.Ruby.GetitDone-MVP2",
+                "paths": ["/share", "/share?*"]
+            }
+        ]
+    }
+}
